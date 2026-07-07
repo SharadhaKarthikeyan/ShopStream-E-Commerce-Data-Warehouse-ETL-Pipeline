@@ -1,5 +1,5 @@
 # ShopStream: E-Commerce Data Warehouse & ETL Pipeline
-*Project Stack: Python | SQL | dbt | Airflow | Dashboard*
+Project Header Python SQL dbt Airflow Dashboard
 
 ## Project Overview
 Modern retail and e-commerce platforms generate massive volumes of raw transactional data. This project provides an end-to-end data engineering and analytics solution that ingests raw e-commerce records, builds a clean star-schema PostgreSQL data warehouse using dbt Core, validates ingestion integrity, and compiles multi-dimensional reporting marts. To tie the lifecycle together, the pipeline is fully orchestrated using Apache Airflow in Docker and visualised through an interactive, recruiter-ready Streamlit dashboard.
