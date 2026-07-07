@@ -1,0 +1,122 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned and deduplicated customer records"
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_products
+    description: "Cleaned and deduplicated catalog products"
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_orders
+    description: "Cleaned and deduplicated order records"
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['completed', 'pending', 'cancelled', 'returned', 'shipped']
+
+  - name: stg_order_items
+    description: "Cleaned order line items"
+    columns:
+      - name: order_item_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+
+  - name: stg_payments
+    description: "Cleaned payment transaction records"
+    columns:
+      - name: payment_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: payment_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['success', 'failed', 'pending']
+
+  - name: stg_shipments
+    description: "Cleaned shipment tracking records"
+    columns:
+      - name: shipment_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: shipment_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['delivered', 'in_transit', 'delayed', 'cancelled']
+
+  - name: stg_refunds
+    description: "Cleaned refund requests"
+    columns:
+      - name: refund_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: refund_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['processed', 'pending', 'rejected']
+
+  - name: stg_marketing_campaigns
+    description: "Cleaned campaign records"
+    columns:
+      - name: campaign_id
+        tests:
+          - unique
+          - not_null

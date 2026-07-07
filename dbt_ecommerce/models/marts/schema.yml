@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension table decorated with aggregate purchase behaviors"
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_products
+    description: "Product dimension table containing items and margin metrics"
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_date
+    description: "Date dimension generated table"
+    columns:
+      - name: date_day
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_marketing_campaigns
+    description: "Marketing campaign dimensions including Organic fallback"
+    columns:
+      - name: campaign_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_orders
+    description: "Consolidated orders fact table"
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: campaign_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_marketing_campaigns')
+              field: campaign_id

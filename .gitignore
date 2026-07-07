@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Data directories (only keep structures, ignore actual large CSVs)
+data/raw/*.csv
+data/processed/*.csv
+data/sample/*.csv
+
+# dbt logs and targets
+dbt_ecommerce/target/
+dbt_ecommerce/dbt_packages/
+dbt_ecommerce/logs/
+
+# IDE files
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Airflow logs and database
+logs/
+airflow.db
+airflow.cfg
+webserver_config.py

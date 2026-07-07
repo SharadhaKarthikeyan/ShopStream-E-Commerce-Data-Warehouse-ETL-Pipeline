@@ -1,0 +1,38 @@
+name: 'shopstream_dw'
+version: '1.0.0'
+config-version: 2
+
+# Use the shopstream_profile configuration from profiles.yml
+profile: 'shopstream_profile'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# Configure models staging, intermediate, and marts
+models:
+  shopstream_dw:
+    # Staging models represent clean, structured views of raw data
+    staging:
+      +schema: staging
+      +materialized: view
+      +tags: ["staging"]
+      
+    # Intermediate models perform pre-aggregations and metric calculations
+    intermediate:
+      +schema: staging
+      +materialized: view
+      +tags: ["intermediate"]
+      
+    # Marts represent consumer-ready business intelligence fact & dim tables
+    marts:
+      +schema: marts
+      +materialized: table
+      +tags: ["marts"]
